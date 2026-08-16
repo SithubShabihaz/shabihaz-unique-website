@@ -1,12 +1,10 @@
 import Image from "next/image";
 import HeroSection from '@/components/home/HeroSection';
-
-import dynamic from 'next/dynamic';
-const AboutSection = dynamic(() => import('@/components/home/AboutSection'));
-const ServiceCards = dynamic(() => import('@/components/home/ServiceCards'));
-const PortfolioGridProjectSection = dynamic(() => import('@/components/home/PortfolioGridProjectSection'));
-const OurTechnologies = dynamic(() => import('@/components/home/OurTechnologies'));
-const Footer = dynamic(() => import('@/components/Footer'));
+import AboutSection from '@/components/home/AboutSection';
+import ServiceCards from '@/components/home/ServiceCards';
+import PortfolioGridProjectSection from '@/components/home/PortfolioGridProjectSection';
+import OurTechnologies from '@/components/home/OurTechnologies';
+import Footer from '@/components/Footer';
 
 export default function Home() {
   return (
