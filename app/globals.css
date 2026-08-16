@@ -1,10 +1,34 @@
 @import "tailwindcss";
 
-/* Yeh rule Tailwind ke default reset ko override karke Google Fonts ko force karega */
+/* Default website font */
+html,
 body {
-  font-family: var(--font-rajdhani), sans-serif !important;
+    margin: 0;
+    padding: 0;
+    background-color: #000 !important;
+    color: #fff;
+    font-family: var(--font-rajdhani), sans-serif !important;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-poppins) !important;
+/* Normal text */
+p,
+span,
+a,
+li,
+button,
+input,
+textarea,
+select,
+label {
+    font-family: var(--font-rajdhani), sans-serif !important;
+}
+
+/* Headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-poppins), sans-serif !important;
 }
