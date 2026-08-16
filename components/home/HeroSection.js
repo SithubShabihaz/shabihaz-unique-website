@@ -277,16 +277,16 @@ export default function App() {
 
                 {/* Hero Title */}
                 <div className="relative mt-6 w-full max-w-4xl mx-auto flex flex-col items-center justify-center mb-6 text-center">
-                    <span className="w-full font-rajdhani text-center text-5xl uppercase sm:text-6xl md:text-[160px] italic font-extrabold text-white tracking-tight leading-[1.1]">
+                    <p className="w-full font-rajdhani text-center text-5xl uppercase sm:text-6xl md:text-[160px] italic font-extrabold text-white tracking-tight leading-[1.1]">
                         Shabihaz
-                    </span>
+                    </p>
                     <FadeinAnimation />
                 </div>
 
                 {/* Subtitle Description */}
-                <span className="max-w-xl font-rajdhani mx-auto text-center text-sm md:text-base text-white leading-relaxed mb-12 block">
+                <p className="max-w-xl font-rajdhani mx-auto text-center text-sm md:text-base text-white leading-relaxed mb-12 block">
                     Shabihaz Tech Solutions delivers expert Full Stack Development, secure Cloud Architecture, smart AI automation, and results-driven Digital Marketing services to scale your business growth.
-                </span>
+                </p>
 
                 {/* DYNAMIC INTERACTIVE VISUAL HERO WRAPPER */}
                 <div className="relative w-full max-w-5xl mx-auto mt-4 flex flex-col lg:flex-row items-center justify-center gap-10 lg:gap-0">
