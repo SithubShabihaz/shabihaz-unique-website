@@ -1,10 +1,12 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
+import { Turnstile } from 'nextjs-turnstile';
 
 export default function AdminPanel() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [token, setToken] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState('');
   const [audioEnabled, setAudioEnabled] = useState(false);
   
@@ -30,7 +32,6 @@ export default function AdminPanel() {
     }
   };
 
-  // PWA App Badge update karne ka function (WhatsApp jaisa red number icon par)
   const updateAppBadge = (count: number) => {
     if ('setAppBadge' in navigator) {
       if (count > 0) {
@@ -47,17 +48,14 @@ export default function AdminPanel() {
     }
   }, []);
 
-  // Real-time polling for both Calendly & Google Sheets
   useEffect(() => {
     if (!isLoggedIn) return;
 
     const fetchData = async () => {
       try {
-        // 1. Fetch Calendly/Cal Data
         const resCal = await fetch('/api/webhook/cal');
         const dataCal = await resCal.json();
 
-        // 2. Fetch Google Sheet Form Data
         const resSheet = await fetch('/api/webhook/googlesheet');
         const dataSheet = await resSheet.json();
 
@@ -70,14 +68,13 @@ export default function AdminPanel() {
             prevSheetCount.current = sheetLen;
             hasInitialized.current = true;
           } else {
-            // Agar Calendly mein ya Google Sheet mein koi naya data aya hai -> SOUND & BADGE!
             if (calLen > prevCalCount.current || sheetLen > prevSheetCount.current) {
               playNotificationSound();
               
               const newItemsCount = (calLen - prevCalCount.current) + (sheetLen - prevSheetCount.current);
               setUnreadCount((prev) => {
                 const totalUnread = prev + (newItemsCount > 0 ? newItemsCount : 1);
-                updateAppBadge(totalUnread); // App icon par red badge update hoga
+                updateAppBadge(totalUnread);
                 return totalUnread;
               });
             }
@@ -94,7 +91,7 @@ export default function AdminPanel() {
     };
 
     fetchData();
-    const interval = setInterval(fetchData, 5000); // Har 5 seconds baad check karega
+    const interval = setInterval(fetchData, 5000);
 
     return () => clearInterval(interval);
   }, [isLoggedIn]);
@@ -103,11 +100,16 @@ export default function AdminPanel() {
     e.preventDefault();
     setErrorMsg('');
 
+    if (!token) {
+      setErrorMsg('Please complete the CAPTCHA verification.');
+      return;
+    }
+
     try {
       const res = await fetch('/api/admin-login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password, token }),
       });
 
       const data = await res.json();
@@ -123,7 +125,6 @@ export default function AdminPanel() {
     }
   };
 
-  // Badge clear karne ka handler jab admin notifications dekh le
   const handleClearNotifications = () => {
     setUnreadCount(0);
     updateAppBadge(0);
@@ -153,7 +154,7 @@ export default function AdminPanel() {
             />
           </div>
 
-          <div className="mb-6">
+          <div className="mb-4">
             <label className="block text-sm text-white mb-1">Password</label>
             <input
               type="password"
@@ -162,6 +163,19 @@ export default function AdminPanel() {
               required
               className="w-full p-3 bg-gray-950 border border-[#ffff39]/20 rounded-lg text-white focus:outline-none focus:border-[#ffff39]"
               placeholder="••••••••"
+            />
+          </div>
+
+          {/* Turnstile Widget */}
+          <div className="mb-6 flex justify-center">
+            <Turnstile
+              siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""}
+              onSuccess={(token) => setToken(token)}
+              onError={() => {
+                setToken(null);
+                setErrorMsg("CAPTCHA error encountered.");
+              }}
+              onExpire={() => setToken(null)}
             />
           </div>
 
@@ -175,6 +189,7 @@ export default function AdminPanel() {
 
   return (
     <div className="min-h-screen mt-30 bg-black text-gray-100 p-8">
+      {/* Dashboard UI remains unchanged */}
       <div className="max-w-5xl mx-auto flex flex-wrap justify-between items-center mb-8 border-b border-gray-800 pb-4 gap-4">
         <div className="flex items-center gap-3">
           <h1 className="text-2xl font-bold text-[#ffff39]">Shabihaz Admin Dashboard</h1>
@@ -186,7 +201,6 @@ export default function AdminPanel() {
         </div>
 
         <div className="flex items-center gap-3">
-          {/* Unread Notifications Red Badge Pill */}
           {unreadCount > 0 && (
             <button
               onClick={handleClearNotifications}
@@ -227,8 +241,6 @@ export default function AdminPanel() {
       </div>
 
       <div className="max-w-5xl mx-auto space-y-8">
-        
-        {/* Google Sheet Form Submissions Section */}
         <div className="bg-black border border-[#ffff39]/20 p-6 rounded-xl shadow-lg">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold text-white">Google Sheet Form Submissions</h2>
@@ -259,7 +271,6 @@ export default function AdminPanel() {
           )}
         </div>
 
-        {/* Calendly / Cal.com Bookings Section */}
         <div className="bg-black border border-[#ffff39]/20 p-6 rounded-xl shadow-lg">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold text-white">Live Booking & Meeting Triggers</h2>
@@ -291,7 +302,6 @@ export default function AdminPanel() {
             </div>
           )}
         </div>
-
       </div>
     </div>
   );
