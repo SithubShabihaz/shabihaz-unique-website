@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+/* Default website font */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #000 !important;
+    color: #fff;
+    font-family: var(--font-rajdhani), sans-serif !important;
+}
+
+/* Normal text */
+p,
+span,
+a,
+li,
+button,
+input,
+textarea,
+select,
+label {
+    font-family: var(--font-rajdhani), sans-serif !important;
+}
+
+/* Headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-poppins), sans-serif !important;
+}
