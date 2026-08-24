@@ -4,6 +4,7 @@ import { poppins, rajdhani } from "./fonts";   // ← Yahan import kiya humne
 import "./globals.css";
 import Header from "@/components/Header.js";
 import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   title: "Shabihaz | Full Stack Developer & AI Automation Specialist",
@@ -49,6 +50,7 @@ export default function RootLayout({
         <main className="flex-1">   {/* ← YAHAN ADD KARO (main wrapper) */}
           {children}
         </main>
+        <SpeedInsights />
       </body>
     </html>
   );

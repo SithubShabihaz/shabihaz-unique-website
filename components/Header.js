@@ -174,7 +174,7 @@ export default function Header() {
                                     {item.subItems && (
                                         <button 
                                             onClick={(e) => toggleMobileDropdown(item.label, e)}
-                                            className="p-3 text-gray-400 hover:text-[#ffff39] transition-colors" aria-label={`Toggle submenu for ${item.label}"
+                                            className="p-3 text-gray-400 hover:text-[#ffff39] transition-colors" aria-label={`Toggle submenu for ${item.label}`}
                                         >
                                             <svg className={`w-4 h-4 transform transition-transform duration-300 ${isDropdownOpen ? 'rotate-180 text-[#ffff39]' : 'rotate-0'}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
