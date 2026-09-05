@@ -92,9 +92,9 @@ export default function Footer() {
 
           {/* Quick Links Column */}
           <div className="space-y-4">
-            <h4 className="text-sm font-bold text-[#ffff39] tracking-widest uppercase font-rajdhani">
+            <h2 className="text-sm font-bold text-[#ffff39] tracking-widest uppercase font-rajdhani">
               Quick Navigation
-            </h4>
+            </h2>
             <ul className="space-y-2.5">
               {footerLinks.links.map((link) => (
                 <li key={link.label}>
@@ -109,9 +109,9 @@ export default function Footer() {
 
           {/* Contact / Info Column */}
           <div className="space-y-4">
-            <h4 className="text-sm font-bold text-[#ffff39] tracking-widest uppercase font-rajdhani">
+            <h2 className="text-sm font-bold text-[#ffff39] tracking-widest uppercase font-rajdhani">
               Get In Touch
-            </h4>
+            </h2>
             <ul className="space-y-3">
               <li className="flex items-center gap-3 text-sm text-white">
                 <div className="text-[#ffff39] shrink-0">
@@ -137,9 +137,9 @@ export default function Footer() {
 
           {/* Start a Project Segment */}
           <div className="space-y-4">
-            <h4 className="text-sm font-bold text-[#ffff39] tracking-widest uppercase font-rajdhani">
+            <h2 className="text-sm font-bold text-[#ffff39] tracking-widest uppercase font-rajdhani">
               Start a Project
-            </h4>
+            </h2>
             <p className="text-xs text-white leading-relaxed font-light">
               Are you ready to automate your complex manual workflows or securely scale your business's core infrastructure? Let's talk today.
             </p>
